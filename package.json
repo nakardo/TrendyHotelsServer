@@ -2,6 +2,9 @@
   "name": "trendy-hotels-server",
   "description": "a webserver for TrendyHotels App",
   "version": "0.0.1",
+  "engines": {
+    "node": "0.11.x"
+  },
   "private": true,
   "dependencies": {
     "engine.io": "~0.9.0",
