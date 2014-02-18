@@ -4,6 +4,7 @@ var restler = require('restler')
   , engine = require('engine.io')
   , http = require('http').createServer().listen(process.env.PORT || 5000)
   , async = require('async')
+  , colors = require('colors')
   , server = engine.attach(http)
   , hotels = new Array()
   , count = new Array();
@@ -54,7 +55,6 @@ server.on('connection', function (socket) {
 
 	socket.on('message', function (data) {
 		var requestJson = JSON.parse(data.toString());
-		
 		/*
 		 * pull hotels nearby information, with visitors count for a given
 		 * latitude and longitude.
@@ -63,6 +63,9 @@ server.on('connection', function (socket) {
 		if ('count' == requestJson.event) {
 			var data = requestJson.data;
 			if (data.latitude && data.longitude) {
+				console.log(('[socket message: count] hotels nearby @[' + data.latitude + ', '
+					+ data.longitude + '].').green);
+
 				var HOTEL_AVAILABILITY_URL = '/json/bookings.getHotelAvailabilityMobile';
 				restler.get(BASE_SERVICE_URL + HOTEL_AVAILABILITY_URL, {
 					'username': BOOKING_API_AUTH_USER,
@@ -86,6 +89,7 @@ server.on('connection', function (socket) {
 								var response = JSON.stringify({ 'status': 'OK', 'results': getResults() });
 								socket.send(response);
 								
+								console.log(('[socket response] ' + count.length + ' hotels found.').magenta);
 								timeoutId = setTimeout(getHotelCount, BOOKING_API_HOTEL_COUNT_POLLING_TIMEOUT);
 							};
 						});
@@ -101,7 +105,7 @@ server.on('connection', function (socket) {
 	});
 
 	socket.on('close', function () {
-		console.log('closed');
+		console.log('[socket closed]'.red);
 		clearInterval(timeoutId);
 		hotels = new Array(); count = new Array();
 	});
