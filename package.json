@@ -3,7 +3,7 @@
   "description": "a webserver for TrendyHotels App",
   "version": "0.0.1",
   "engines": {
-    "node": "0.11.x"
+    "node": "0.10.x"
   },
   "private": true,
   "dependencies": {

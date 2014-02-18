@@ -8,5 +8,3 @@ deploy:
   app: trendy-hotels
   on:
     repo: dmacosta/TrendyHotelsServer
-  run:
-    - "node app.js"
