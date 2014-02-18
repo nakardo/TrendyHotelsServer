@@ -2,7 +2,7 @@ require('date-utils');
 
 var restler = require('restler')
   , engine = require('engine.io')
-  , http = require('http').createServer().listen(3000)
+  , http = require('http').createServer().listen(process.env.PORT || 5000)
   , async = require('async')
   , server = engine.attach(http)
   , hotels = new Array()
