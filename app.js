@@ -77,6 +77,7 @@ server.on('connection', function (socket) {
 					});
 
 					async.parallel(getHotelCountParallelCalls(), function(err, results) {
+						count = results;
 						var response = JSON.stringify({ 'status': 'OK', 'results': getResults() });
 						socket.send(response);
 					});
