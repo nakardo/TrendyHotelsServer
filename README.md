@@ -1,4 +1,4 @@
 TrendyHotelsServer
 ==================
 
-A simple websocket server for TrendyHotels App
+A simple Engine.IO server for TrendyHotels App
