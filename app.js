@@ -47,8 +47,11 @@ function getResults() {
 var BASE_SERVICE_URL = 'https://iphone-xml.booking.com:443';
 var BOOKING_API_AUTH_USER = process.env.BOOKING_API_AUTH_USER;
 var BOOKING_API_AUTH_PASSWORD = process.env.BOOKING_API_AUTH_PASSWORD;
+var BOOKING_API_HOTEL_COUNT_POLLING_TIMEOUT = 10000;
 
 server.on('connection', function (socket) {
+	var timeoutId = undefined;
+
 	socket.on('message', function (data) {
 		var requestJson = JSON.parse(data.toString());
 		
@@ -76,11 +79,19 @@ server.on('connection', function (socket) {
 						hotels.push(hotel);
 					});
 
-					async.parallel(getHotelCountParallelCalls(), function(err, results) {
-						count = results;
-						var response = JSON.stringify({ 'status': 'OK', 'results': getResults() });
-						socket.send(response);
-					});
+					var getHotelCount = function() {
+						async.parallel(getHotelCountParallelCalls(), function(err, results) {
+							if (server.clientsCount > 0) {
+								count = results;
+								var response = JSON.stringify({ 'status': 'OK', 'results': getResults() });
+								socket.send(response);
+								
+								timeoutId = setTimeout(getHotelCount, BOOKING_API_HOTEL_COUNT_POLLING_TIMEOUT);
+							};
+						});
+					}
+
+					getHotelCount();
 				});
 			} else {
 				var response = JSON.stringify({ 'status': 'INVALID_REQUEST', 'results': [] });
@@ -90,6 +101,8 @@ server.on('connection', function (socket) {
 	});
 
 	socket.on('close', function () {
-		hotels = count = undefined;
+		console.log('closed');
+		clearInterval(timeoutId);
+		hotels = new Array(); count = new Array();
 	});
 });
