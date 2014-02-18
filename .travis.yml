@@ -1,0 +1,7 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: YM4KpUz4eXobWr+B65Tox1PeiLhgBGdGUGmWmG0Uju0FVC6vBioNoKnhDVcRBTmBJvMgh94iqdYb2O0u8ZnmhuVGm5bPDRj7gdzikY1DRkFbzViEI5pLIlz/Z/inhtHR/VULvGwaIfS0M08IQyK+zCKkp8XRFceBioXTfOrTiRE=
+  app: trendy-hotels
+  on:
+    repo: dmacosta/TrendyHotelsServer
