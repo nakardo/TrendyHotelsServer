@@ -39,6 +39,7 @@ function getResults() {
 			'district': hotel.district,
 			'address': hotel.address,
 			'main_photo_url': hotel.main_photo_url,
+			'url': hotel.url,
 			'count': count[i]
 		});
 	};
