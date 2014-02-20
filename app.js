@@ -2,7 +2,7 @@ require('date-utils');
 
 var restler = require('restler')
   , engine = require('engine.io')
-  , http = require('http').createServer().listen(process.env.PORT || 5000)
+  , http = require('http').createServer().listen(process.env.PORT || 8080)
   , async = require('async')
   , colors = require('colors')
   , server = engine.attach(http)
@@ -38,6 +38,7 @@ function getResults() {
 			'hotel_name': hotel.hotel_name,
 			'district': hotel.district,
 			'address': hotel.address,
+			'main_photo_url': hotel.main_photo_url,
 			'count': count[i]
 		});
 	};
