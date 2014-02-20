@@ -1,7 +1,7 @@
 TrendyHotelsServer
 ==================
 
-A simple Engine.IO server for TrendyHotels App
+A simple Engine.IO server for [TrendyHotels][1] App.
 
 [![Build Status](https://travis-ci.org/dmacosta/TrendyHotelsServer.png)](https://travis-ci.org/dmacosta/TrendyHotelsServer)
 
